@@ -1,0 +1,17 @@
+<div class="user-profile">
+  <h1><%= @user.name %> さんのプロフィール</h1>
+
+  <% if @user.profile_image.attached? %>
+    <%= image_tag @user.profile_image, class: 'profile-image' %>
+  <% else %>
+    <p>プロフィール画像は設定されていません。</p>
+  <% end %>
+
+  <p>メールアドレス: <%= @user.email %></p>
+  <p>自己紹介: <%= @user.introduction %></p>
+
+  <% if current_user == @user %>
+    <%= link_to 'プロフィールを編集', edit_user_path(@user), class: 'btn btn-primary' %>
+    <%= button_to 'アカウントを削除', user_path(@user), method: :delete, data: { confirm: '本当にアカウントを削除しますか？' }, class: 'btn btn-danger' %>
+  <% end %>
+</div>

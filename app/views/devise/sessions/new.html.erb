@@ -1,9 +1,21 @@
+<%# flash メッセージの表示を削除 %>
+
 <div class="text-center">
   <h2>ログイン</h2>
 </div>
 
 <%= form_with(model: resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-signin col-md-6 mx-auto' }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <%# フォームのエラーメッセージのみ表示 %>
+  <% if resource.errors.any? %>
+    <div class="error-messages">
+      <h2><%= pluralize(resource.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+        <% resource.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="form-group">
     <%= f.label :email, class: 'form-label' %>
