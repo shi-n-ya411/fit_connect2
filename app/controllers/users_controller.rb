@@ -9,12 +9,12 @@ class UsersController < ApplicationController
 
   # ユーザー詳細ページ
   def show
-    # @user は set_user で設定済み
+    @user
   end
 
   # プロフィール編集ページ
   def edit
-    # @user は set_user で設定済み
+    @user
   end
 
   # プロフィール更新処理

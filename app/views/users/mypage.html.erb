@@ -1,0 +1,8 @@
+<div class="mypage-container">
+  <h1>マイページ</h1>
+  <p>こんにちは、<%= @user.name %> さん！</p>
+  <p>メールアドレス: <%= @user.email %></p>
+
+  <!-- 必要に応じて、他の情報を表示 -->
+  <%= link_to 'プロフィールを編集', edit_user_registration_path, class: 'btn btn-primary' %>
+</div>
