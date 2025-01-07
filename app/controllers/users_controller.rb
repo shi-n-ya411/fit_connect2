@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   # プロフィール編集ページ
   def edit
     @user
+
   end
 
   # プロフィール更新処理

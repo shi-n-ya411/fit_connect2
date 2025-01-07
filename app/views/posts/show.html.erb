@@ -1,2 +1,12 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<h1><%= @post.title %></h1>
+<p><%= @post.content %></p>
+<p>投稿者: <%= @post.user.name %></p>
+<% if @post.image.attached? %>
+  <div>
+    <%= image_tag @post.image, class: "img-fluid", alt: @post.title %>
+  </div>
+<% end %>
+
+<%= link_to '編集', edit_post_path(@post), class: 'btn btn-warning' %>
+<%= link_to '削除', post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+<%= link_to '戻る', posts_path, class: 'btn btn-secondary' %>

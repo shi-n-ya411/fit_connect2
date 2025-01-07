@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  before_action :configure_account_update_params, only: [:update]
   # before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
+
 
   # GET /resource/sign_up
   # def new
@@ -39,6 +40,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
    protected
+
+   def configure_account_update_params
+    if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+      # パスワードを変更しない場合
+      devise_parameter_sanitizer.permit(:account_update, keys: [:name, :profile_image, :introduction])
+    else
+      # パスワードを変更する場合
+      devise_parameter_sanitizer.permit(:account_update, keys: [:name, :profile_image, :introduction, :password, :password_confirmation, :current_password])
+    end
+  end
 
   def after_sign_up_path_for(resource)
     mypage_users_path

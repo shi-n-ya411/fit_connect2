@@ -2,7 +2,13 @@
   <h1>マイページ</h1>
   <p>こんにちは、<%= @user.name %> さん！</p>
   <p>メールアドレス: <%= @user.email %></p>
+  <div class="profile">
+  <% if current_user.profile_image.attached? %>
+    <%= image_tag current_user.profile_image.variant(resize_to_fill: [150, 150]), class: "rounded-circle" %>
+  <% else %>
+    <%= image_tag "no_image.jpg", class: "rounded-circle" %>
+  <% end %>
+</div>
 
-  <!-- 必要に応じて、他の情報を表示 -->
   <%= link_to 'プロフィールを編集', edit_user_registration_path, class: 'btn btn-primary' %>
 </div>
