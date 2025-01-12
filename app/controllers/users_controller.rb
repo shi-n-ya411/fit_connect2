@@ -7,6 +7,19 @@ class UsersController < ApplicationController
     @user = current_user # ログイン中のユーザー情報を取得
   end
 
+  #フォロー機能
+  def following
+    @user = User.find(params[:id])
+    @users = @user.following
+    render 'show_follow'
+  end
+
+  def followers
+    @user = User.find(params[:id])
+    @users = @user.followers
+    render 'show_follow'
+  end
+
   # ユーザー詳細ページ
   def show
     @user
@@ -15,7 +28,6 @@ class UsersController < ApplicationController
   # プロフィール編集ページ
   def edit
     @user
-
   end
 
   # プロフィール更新処理

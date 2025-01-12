@@ -7,6 +7,15 @@
     <p>プロフィール画像は設定されていません。</p>
   <% end %>
 
+  <% if current_user.following.include?(@user) %>
+    <%= button_to 'フォロー解除', relationship_path(@user), method: :delete, class: 'btn btn-danger' %>
+  <% else %>
+    <%= button_to 'フォローする', relationships_path(followed_id: @user.id), method: :post, class: 'btn btn-primary' %>
+  <% end %>
+
+<p>フォロー数: <%= @user.following.count %></p>
+<p>フォロワー数: <%= @user.followers.count %></p>
+
   <p>メールアドレス: <%= @user.email %></p>
   <p>自己紹介: <%= @user.introduction %></p>
 

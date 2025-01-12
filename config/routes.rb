@@ -1,4 +1,20 @@
 Rails.application.routes.draw do
+  #-------------------管理者-----------------------
+
+  # Deviseのルート設定
+  devise_for :admins, path: 'admins', controllers: {
+    registrations: 'admins/registrations',
+    sessions: 'admins/sessions'
+  }
+
+  # 管理者用リソース
+  namespace :admin do
+    resources :users, only: [:index, :destroy] # 管理者用ユーザー管理ページ
+    resources :posts, only: [:index, :destroy] # 投稿管理ページ
+    root to: 'dashboard#index' # 管理者用トップページ
+  end
+
+  #-------------------一般ユーザー-----------------------
 
   # Devise のルーティング
   devise_for :users, controllers: {
@@ -13,11 +29,21 @@ Rails.application.routes.draw do
   # ユーザーマイページ
   get 'mypage', to: 'users#mypage', as: 'mypage_users'
 
-  # ユーザー関連のルート
-  resources :users, only: [:index, :show, :destroy]
+  # ユーザー関連
+  resources :users, only: [:index, :show, :destroy] do
+    member do
+      get :following, :followers # フォロー機能のルート
+    end
+  end
 
-  # 投稿関連のルート
-  resources :posts
+  # 投稿関連
+  resources :posts do
+    resources :comments, only: [:create, :destroy] # コメント機能
+    resource :like, only: [:create, :destroy] # いいね機能
+  end
 
+  # フォロー機能
+  resources :relationships, only: [:create, :destroy]
 end
+
 
