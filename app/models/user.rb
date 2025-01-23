@@ -1,32 +1,43 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # Devise モジュール
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  # アソシエーション
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :post
-  # フォローしているユーザー
+
   has_many :active_relationships, class_name: 'Relationship', foreign_key: 'follower_id', dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
-  # フォローされているユーザー
   has_many :passive_relationships, class_name: 'Relationship', foreign_key: 'followed_id', dependent: :destroy
   has_many :followers, through: :passive_relationships, source: :follower
 
-  #アクティブストレージ
+  # アクティブストレージ
   has_one_attached :profile_image
 
+  # バリデーション
+  validates :name, presence: true, length: { maximum: 50 }
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :password, presence: true, length: { minimum: 6 }, if: -> { new_record? || !password.nil? }
+
+  # メソッド
   def get_profile_image(width, height)
-    unless profile_image.attached?
-      file_path = Rails.root.join('app/assets/images/default-profile.png')
-      profile_image.attach(io: File.open(file_path), filename: 'default-profile.png', content_type: 'image/png')
+    if profile_image.attached?
+      profile_image.variant(resize_to_limit: [width, height]).processed
+    else
+      ActionController::Base.helpers.asset_path('no_image.jpg')
     end
-    profile_image.variant(resize_to_limit: [width, height]).processed
+  end
+  
+
+  # フォロー数カウント
+  def following_count
+    following.size
   end
 
-  validates :name, presence: true
-  validates :email, presence: true
-  validates :password, presence: true, length: { minimum: 6 }
+  def followers_count
+    followers.size
+  end
 end

@@ -5,7 +5,7 @@ class UsersController < ApplicationController
    # マイページ
   def mypage
     @user = current_user # ログイン中のユーザー情報を取得
-    @posts = @user.posts.order(created_at: :desc) # ユーザーの投稿を取得
+    @posts = Post.where(user: [@user] + @user.following).order(created_at: :desc) # 自身とフォローユーザーの投稿を取得
   end
 
   #フォロー機能
