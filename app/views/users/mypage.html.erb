@@ -13,7 +13,7 @@
               <%= image_tag "no_image.jpg", class: "rounded-circle border mb-3", alt: "No Profile Image" %>
             <% end %>
             <h5 class="card-title">
-              こんにちは、<%= @user.name %> さん！
+              <%= @user.name %>
             </h5>
             <p class="card-text text-muted mt-2">
               自己紹介: <%= @user.introduction.presence || "自己紹介が登録されていません。" %>

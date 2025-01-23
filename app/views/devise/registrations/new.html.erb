@@ -1,52 +1,63 @@
-<% if resource.errors.any? %>
-  <div class="error-messages">
-    <h2><%= pluralize(resource.errors.count, "error") %> prohibited this user from being saved:</h2>
-    <ul>
-      <% resource.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <!-- エラーメッセージ -->
+          <% if resource.errors.any? %>
+            <div class="alert alert-danger">
+              <h5><%= pluralize(resource.errors.count, "error") %> が発生しました:</h5>
+              <ul class="mb-0">
+                <% resource.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <!-- 新規登録ヘッダー -->
+          <div class="text-center mb-4">
+            <h2 class="card-title">新規登録</h2>
+          </div>
+
+          <!-- 新規登録フォーム -->
+          <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-signup' }) do |f| %>
+            <div class="form-group">
+              <%= f.label :name, class: 'form-label' %>
+              <%= f.text_field :name, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :email, class: 'form-label' %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :password, class: 'form-label' %>
+              <% if @minimum_password_length %>
+                <small class="form-text text-muted">
+                  (<%= @minimum_password_length %> 文字以上)
+                </small>
+              <% end %>
+              <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :password_confirmation, class: 'form-label' %>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
+            </div>
+
+            <div class="d-grid mt-4">
+              <%= f.submit "新規登録", class: 'btn btn-primary btn-block' %>
+            </div>
+          <% end %>
+
+          <!-- その他リンク -->
+          <div class="text-center mt-3">
+            <%= render "devise/shared/links" %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-<% end %>
-
-
-<div class="text-center">
-  <h2>新規登録</h2>
-</div>
-
-<%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-signup col-md-6 mx-auto' }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="form-group">
-    <%= f.label :name, class: 'form-label' %>
-    <%= f.text_field :name, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :email, class: 'form-label' %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :password, class: 'form-label' %>
-    <% if @minimum_password_length %>
-      <small class="form-text text-muted">
-        (<%= @minimum_password_length %> 文字以上)
-      </small>
-    <% end %>
-    <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :password_confirmation, class: 'form-label' %>
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "新規登録", class: 'btn btn-primary btn-block' %>
-  </div>
-<% end %>
-
-<div class="text-center">
-  <%= render "devise/shared/links" %>
 </div>

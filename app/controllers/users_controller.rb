@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   # ユーザー詳細ページ
   def show
     @user
+    @posts = @user.posts.order(created_at: :desc)
   end
 
   # プロフィール編集ページ
