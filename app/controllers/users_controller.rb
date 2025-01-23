@@ -1,11 +1,15 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user! # ログインしていないユーザーを弾く
-  before_action :set_user, only: [:show, :edit, :update] # ユーザー情報を事前に取得
+  # ログインしていないユーザーを弾く
+  before_action :authenticate_user!
+  # ユーザー情報を事前に取得
+  before_action :set_user, only: [:show, :edit, :update]
 
    # マイページ
   def mypage
-    @user = current_user # ログイン中のユーザー情報を取得
-    @posts = Post.where(user: [@user] + @user.following).order(created_at: :desc) # 自身とフォローユーザーの投稿を取得
+    # ログイン中のユーザー情報を取得
+    @user = current_user
+    # 自身とフォローユーザーの投稿を取得
+    @posts = Post.where(user: [@user] + @user.following).order(created_at: :desc)
   end
 
   #フォロー機能
