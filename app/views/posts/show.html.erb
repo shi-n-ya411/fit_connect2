@@ -6,14 +6,18 @@
   <p class="post-content"><%= @post.content %></p>
 
   <!-- 投稿者情報 -->
-  <p class="post-author">投稿者: <%= @post.user.name %></p>
+  <p class="post-author">
+    投稿者: <%= link_to @post.user.name, user_path(@post.user) %>
+  </p>
+
 
   <!-- 投稿画像（添付されている場合のみ表示） -->
   <% if @post.image.attached? %>
-    <div class="post-image">
-      <%= image_tag @post.image, class: "img-fluid", alt: @post.title %>
-    </div>
-  <% end %>
+  <div class="post-image">
+    <%= image_tag @post.image.variant(resize: "200x200"), class: "img-fluid", alt: @post.title %>
+  </div>
+<% end %>
+
   
   <!-- いいね機能 -->
   <div class="like-section">
@@ -30,7 +34,7 @@
   <div>
     <strong><%= comment.user.name %></strong>: 
     <%= comment.content %>
-    <% if comment.user == current_user || current_user.admin? %>
+    <% if comment.user == current_user %>
       <%= link_to "削除", post_comment_path(@post, comment), method: :delete, data: { confirm: "本当に削除しますか？" } %>
     <% end %>
   </div>
@@ -45,6 +49,18 @@
     <%= form.submit "投稿" %>
   </div>
 <% end %>
+
+<!-- 投稿者をフォローするセクション -->
+<div class="follow-section mt-3">
+  <% if @post.user != current_user %> <!-- 自分自身はフォロー不可 -->
+    <% if current_user.following?(@post.user) %>
+      <%= button_to 'フォロー解除', relationship_path(@post.user), method: :delete, class: 'btn btn-danger' %>
+    <% else %>
+      <%= button_to 'フォローする', relationships_path(followed_id: @post.user.id), method: :post, class: 'btn btn-primary' %>
+    <% end %>
+  <% end %>
+</div>
+
 
   <!-- アクションボタン -->
   <div class="post-actions mt-3">

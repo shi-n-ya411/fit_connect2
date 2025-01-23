@@ -1,11 +1,12 @@
 <div class="user-profile">
-  <h1><%= @user.name %> さんのプロフィール</h1>
+  <h1 class="text-center my-4"><%= @user.name %> さんのプロフィール</h1>
 
   <% if @user.profile_image.attached? %>
-    <%= image_tag @user.profile_image, class: 'profile-image' %>
+    <%= image_tag @user.profile_image.variant(resize: "150x150"), class: "rounded-circle border" %>
   <% else %>
     <p>プロフィール画像は設定されていません。</p>
   <% end %>
+
 
   <% if current_user.following.include?(@user) %>
     <%= button_to 'フォロー解除', relationship_path(@user), method: :delete, class: 'btn btn-danger' %>
@@ -16,7 +17,6 @@
 <p>フォロー数: <%= @user.following.count %></p>
 <p>フォロワー数: <%= @user.followers.count %></p>
 
-  <p>メールアドレス: <%= @user.email %></p>
   <p>自己紹介: <%= @user.introduction %></p>
 
   <% if current_user == @user %>

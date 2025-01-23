@@ -8,7 +8,7 @@
         <div class="card mb-4 shadow-sm">
           <div class="card-body text-center">
             <% if @user.profile_image.attached? %>
-              <%= image_tag(@user.get_profile_image(150, 150), class: "rounded-circle border") %>
+              <%= image_tag @user.profile_image.variant(resize_to_fill: [150, 150]), class: "rounded-circle border" %>
             <% else %>
               <%= image_tag "no_image.jpg", class: "rounded-circle border mb-3", alt: "No Profile Image" %>
             <% end %>
