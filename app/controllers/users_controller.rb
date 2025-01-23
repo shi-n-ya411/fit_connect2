@@ -5,6 +5,7 @@ class UsersController < ApplicationController
    # マイページ
   def mypage
     @user = current_user # ログイン中のユーザー情報を取得
+    @posts = @user.posts.order(created_at: :desc) # ユーザーの投稿を取得
   end
 
   #フォロー機能
