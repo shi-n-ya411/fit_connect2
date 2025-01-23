@@ -18,8 +18,8 @@
             <p class="card-text text-muted mt-2">
               自己紹介: <%= @user.introduction.presence || "自己紹介が登録されていません。" %>
             </p>
-            <p>フォロー中: <%= @user.following_count %></p>
-            <p>フォロワー: <%= @user.followers_count %></p>
+            <p>フォロー中: <%= link_to "#{@user.following_count}", following_user_path(@user), class: 'text-decoration-none' %></p>
+            <p>フォロワー: <%= link_to "#{@user.followers_count}", followers_user_path(@user), class: 'text-decoration-none' %></p>
             <%= link_to 'プロフィールを編集', edit_user_registration_path, class: 'btn btn-primary btn-sm mt-3' %>
           </div>
         </div>
