@@ -50,6 +50,9 @@ Rails.application.routes.draw do
       get :followers
     end
   end
+
+   # 検索機能
+    get "search", to: "searches#search"
 end
 
 
