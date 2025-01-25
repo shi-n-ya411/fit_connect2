@@ -1,0 +1,10 @@
+<h1>検索結果</h1>
+<% if @results.present? %>
+  <ul>
+    <% @results.each do |result| %>
+      <li><%= result.name %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>結果が見つかりませんでした。</p>
+<% end %>
