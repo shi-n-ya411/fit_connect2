@@ -1,54 +1,69 @@
-<%= form_with(model: @user, local: true, url: user_registration_path, method: :put) do |f| %>
-  <div class="form-group">
-    <%= f.label :name, "名前", class: 'form-label' %>
-    <%= f.text_field :name, class: 'form-control' %>
-  </div>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <!-- エラーメッセージ -->
+          <% if resource.errors.any? %>
+            <div class="alert alert-danger">
+              <h5><%= pluralize(resource.errors.count, "error") %> が発生しました:</h5>
+              <ul class="mb-0">
+                <% resource.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
 
-  <div class="form-group">
-    <%= f.label :email, "メールアドレス", class: 'form-label' %>
-    <%= f.email_field :email, class: 'form-control' %>
-  </div>
+          <div class="text-center mb-4"><h2 class="card-title">プロフィール編集</h2></div>
+          <%= form_with(model: @user, local: true, url: user_registration_path, method: :put) do |f| %>
+          <div class="form-group">
+            <%= f.label :name, "名前*", class: 'form-label' %>
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
 
-  <div class="form-group">
-    <%= f.label :profile_image, "プロフィール画像", class: 'form-label' %>
-    <%= f.file_field :profile_image, class: 'form-control' %>
-  </div>
+          <div class="form-group">
+            <%= f.label :email, "メールアドレス*", class: 'form-label' %>
+            <%= f.email_field :email, class: 'form-control' %>
+          </div>
 
-  <div class="form-group">
-    <%= f.label :introduction, "自己紹介", class: 'form-label' %>
-    <%= f.text_area :introduction, class: 'form-control' %>
-  </div>
+          <div class="form-group">
+            <%= f.label :profile_image, "プロフィール画像", class: 'form-label' %>
+            <%= f.file_field :profile_image, class: 'form-control' %>
+          </div>
 
-  <!-- 現在のパスワード -->
-  <div class="form-group">
-    <%= f.label :current_password, "現在のパスワード", class: 'form-label' %>
-    <%= f.password_field :current_password, class: 'form-control' %>
-    <small>現在のパスワードを入力してください。</small>
-  </div>
+          <div class="form-group">
+            <%= f.label :introduction, "自己紹介", class: 'form-label' %>
+            <%= f.text_area :introduction, class: 'form-control' %>
+          </div>
 
-  <!-- パスワード変更時に表示 -->
-  <div class="form-group">
-    <%= f.label :password, "新しいパスワード", class: 'form-label' %>
-    <%= f.password_field :password, class: 'form-control' %>
-    <small>新しいパスワードを入力する場合は6文字以上。</small>
-  </div>
+          <!-- 現在のパスワード -->
+          <div class="form-group">
+            <%= f.label :current_password, "現在のパスワード*", class: 'form-label' %>
+            <%= f.password_field :current_password, class: 'form-control' %>
+            <small>現在のパスワードを入力してください。</small>
+          </div>
 
-  <div class="form-group">
-    <%= f.label :password_confirmation, "新しいパスワード確認", class: 'form-label' %>
-    <%= f.password_field :password_confirmation, class: 'form-control' %>
-  </div>
+          <!-- パスワード変更時に表示 -->
+          <div class="form-group">
+            <%= f.label :password, "新しいパスワード", class: 'form-label' %>
+            <%= f.password_field :password, class: 'form-control' %>
+            <small>新しいパスワードを入力する場合は6文字以上。</small>
+          </div>
 
-  <%= f.submit "更新する", class: 'btn btn-primary' %>
+          <div class="form-group">
+            <%= f.label :password_confirmation, "新しいパスワード確認", class: 'form-label' %>
+            <%= f.password_field :password_confirmation, class: 'form-control' %>
+          </div>
 
-  <% if @user.errors.any? %>
-    <div class="alert alert-danger mt-3">
-      <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+          <div class="d-flex justify-content-between mt-3">
+            <%= f.submit "更新する", class: 'btn btn-primary' %>
+            <%= link_to "戻る", root_path, class: "btn btn-secondary" %>
+          </div>
+          <% end %>
+        </div>
+      </div>
     </div>
-  <% end %>
-<% end %>
+  </div>
+</div>
 
-<%= link_to "戻る", root_path, class: "btn btn-secondary mt-2" %>
