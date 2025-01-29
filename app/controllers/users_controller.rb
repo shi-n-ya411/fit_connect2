@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # ログインしていないユーザーを弾く
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:mypage, :following, :followers]
   # ユーザー情報を事前に取得
   before_action :set_user, only: [:show, :edit, :update]
 
@@ -8,8 +8,12 @@ class UsersController < ApplicationController
   def mypage
     # ログイン中のユーザー情報を取得
     @user = current_user
-    # 自身とフォローユーザーの投稿を取得
-    @posts = Post.where(user: [@user] + @user.following).order(created_at: :desc)
+    if @user.present?
+      @posts = Post.where(user: [@user] + @user.following).order(created_at: :desc)
+    else
+      flash[:alert] = "ログインしてください。"
+      redirect_to new_user_session_path
+    end
   end
 
   #フォロー機能
@@ -27,7 +31,7 @@ class UsersController < ApplicationController
 
   # ユーザー詳細ページ
   def show
-    @user
+    return if @user.nil? # `set_user` の処理で `nil` の場合はリダイレクトされる
     @posts = @user.posts.order(created_at: :desc)
   end
 
@@ -59,8 +63,14 @@ class UsersController < ApplicationController
 
   # URL パラメータからユーザーを取得
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
+    
+    if @user.nil?
+      flash[:alert] = "ユーザーが見つかりません。"
+      redirect_to root_path
+    end
   end
+  
 
   # 許可するパラメータを指定
   def user_params
