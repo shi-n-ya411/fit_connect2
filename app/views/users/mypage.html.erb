@@ -1,10 +1,9 @@
 <div class="mypage-container">
   <h1 class="text-center my-4"><%= @user.name %> さんのマイページ</h1>
-
-  <div class="container">
-    <div class="row">
-      <!--           左カラム           -->
-      <div class="col-md-3">
+    <div class="container">
+      <div class="row">
+<!--           左カラム           -->
+        <div class="col-md-3">
         <div class="card mb-4 shadow-sm">
           <div class="card-body text-center">
             <% if @user.profile_image.attached? %>
@@ -12,8 +11,7 @@
             <% else %>
               <%= image_tag "no_image.jpg", class: "rounded-circle border mb-3", alt: "No Profile Image" %>
             <% end %>
-            <h5 class="card-title">
-              <%= @user.name %>
+            <h5 class="card-title"><%= @user.name %>
             </h5>
             <p class="card-text text-muted mt-2">
               自己紹介: <%= @user.introduction.presence || "自己紹介が登録されていません。" %>
@@ -30,7 +28,7 @@
         <div class="card shadow-sm">
           <div class="card-body">
             <h2>投稿一覧</h2>
-            <div class="text-end mb-3">
+            <div class="mb-3">
               <%= link_to '新規投稿', new_post_path, class: 'btn btn-primary btn-sm' %>
             </div>
             <ul class="list-unstyled">

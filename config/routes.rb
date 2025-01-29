@@ -51,7 +51,9 @@ Rails.application.routes.draw do
     end
   end
 
-    # 検索機能
+   # 検索機能
     get "search", to: "searches#search"
 
 end
+
+
