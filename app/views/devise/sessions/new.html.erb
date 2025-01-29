@@ -1,44 +1,53 @@
-<%# flash メッセージの表示を削除 %>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <!-- エラーメッセージ -->
+          <% if resource.errors.any? %>
+            <div class="alert alert-danger">
+              <h5><%= pluralize(resource.errors.count, "error") %> が発生しました:</h5>
+              <ul class="mb-0">
+                <% resource.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
 
-<div class="text-center">
-  <h2>ログイン</h2>
-</div>
+          <div class="text-center mb-4">
+            <h1 class="card-title">ログイン</h1>
+          </div>
 
-<%= form_with(model: resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-signin col-md-6 mx-auto' }) do |f| %>
-  <%# フォームのエラーメッセージのみ表示 %>
-  <% if resource.errors.any? %>
-    <div class="error-messages">
-      <h2><%= pluralize(resource.errors.count, "error") %> prohibited this user from being saved:</h2>
-      <ul>
-        <% resource.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+          <!-- ログインフォーム -->
+          <%= form_with model: resource, url: session_path(resource_name), local: true do |f| %>
+            <div class="form-group">  
+              <%= f.label :email, class: 'form-label' %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :password, class: 'form-label' %>
+              <%= f.password_field :password, autocomplete: "current-password", class: 'form-control' %>
+            </div>
+
+            <% if devise_mapping.rememberable? %>
+              <div class="form-group form-check">
+                <%= f.check_box :remember_me, class: 'form-check-input' %>
+                <%= f.label :remember_me, class: 'form-check-label' %>
+              </div>
+            <% end %>
+
+            <div class="actions">
+              <%= f.submit "ログイン", class: 'btn btn-primary btn-block' %>
+            </div>
+          <% end %>
+
+          <div class="text-center">
+            <%= render "devise/shared/links" %>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= f.label :email, class: 'form-label' %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
   </div>
-
-  <div class="form-group">
-    <%= f.label :password, class: 'form-label' %>
-    <%= f.password_field :password, autocomplete: "current-password", class: 'form-control' %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="form-group form-check">
-      <%= f.check_box :remember_me, class: 'form-check-input' %>
-      <%= f.label :remember_me, class: 'form-check-label' %>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "ログイン", class: 'btn btn-primary btn-block' %>
-  </div>
-<% end %>
-
-<div class="text-center">
-  <%= render "devise/shared/links" %>
 </div>
