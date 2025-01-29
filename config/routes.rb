@@ -2,9 +2,8 @@ Rails.application.routes.draw do
   #-------------------管理者-----------------------
 
   # Deviseのルート設定
-  devise_for :admins, path: 'admins', controllers: {
-    registrations: 'admins/registrations',
-    sessions: 'admins/sessions'
+  devise_for :admins, path: 'admins', skip: [:registrations], controllers: {
+  sessions: 'admins/sessions'
   }
 
   # 管理者用リソース

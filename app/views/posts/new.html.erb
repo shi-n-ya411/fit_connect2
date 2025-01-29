@@ -1,20 +1,46 @@
-<h1>新規投稿</h1>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <!-- エラーメッセージ -->
+          <% if @post.errors.any? %>
+            <div class="alert alert-danger">
+              <h5><%= pluralize(@post.errors.count, "error") %> が発生しました:</h5>
+              <ul class="mb-0">
+                <% @post.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
 
-<%= form_with model: @post, local: true do |f| %>
-  <div class="form-group">
-    <%= f.label :title, 'タイトル' %>
-    <%= f.text_field :title, class: 'form-control' %>
+          <!-- フォームヘッダー -->
+          <div class="text-center mb-4"><h1 class="card-title">新規投稿</h1></div>
+
+          <!-- フォーム -->
+          <%= form_with model: @post, local: true do |f| %>
+            <div class="form-group mb-3">
+              <%= f.label :title, 'タイトル' %>
+              <%= f.text_field :title, class: 'form-control' %>
+            </div>
+
+            <div class="form-group mb-3">
+              <%= f.label :content, '本文' %>
+              <%= f.text_area :content, class: 'form-control' %>
+            </div>
+
+            <div class="form-group mb-4">
+              <%= f.label :image, '画像アップロード' %>
+              <%= f.file_field :image, class: 'form-control' %>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <%= f.submit '投稿する', class: 'btn btn-primary px-5' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="form-group">
-    <%= f.label :content, '本文' %>
-    <%= f.text_area :content, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :image, '画像アップロード' %>
-    <%= f.file_field :image, class: 'form-control' %>
-  </div>
-
-  <%= f.submit '投稿する', class: 'btn btn-primary' %>
-<% end %>
+</div>
