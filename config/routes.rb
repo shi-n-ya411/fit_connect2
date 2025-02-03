@@ -39,6 +39,9 @@ Rails.application.routes.draw do
   resources :posts do
     resources :comments, only: [:create, :destroy] # コメント機能
     resource :like, only: [:create, :destroy] # いいね機能
+    collection do
+      get :liked # `/posts/liked` でアクセスできるようにする
+    end
   end
 
   # フォロー機能
