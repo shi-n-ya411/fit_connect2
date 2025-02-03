@@ -1,10 +1,26 @@
 <h1>検索結果</h1>
-<% if @results.present? %>
-  <ul>
-    <% @results.each do |result| %>
-      <li><%= result.name %></li>
-    <% end %>
-  </ul>
+
+<% if @users.present? || @posts.present? %>
+
+  <% if @users.present? %>
+    <h2>ユーザー</h2>
+    <ul>
+      <% @users.each do |user| %>
+        <li><%= user.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% if @posts.present? %>
+    <h2>投稿</h2>
+    <ul>
+      <% @posts.each do |post| %>
+        <li>タイトル: <%= post.title %></li>
+        <li>投稿者: <%= post.user.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
 <% else %>
   <p>結果が見つかりませんでした。</p>
 <% end %>
