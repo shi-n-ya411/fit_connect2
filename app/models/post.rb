@@ -17,6 +17,10 @@ class Post < ApplicationRecord
     image
   end
 
+  def liked_by?(user)
+    likes.exists?(user: user)
+  end
+
   # 検索方法分岐
   def self.looks(search, word)
     return Post.none if word.blank?  # 空ワードの場合は結果なし
