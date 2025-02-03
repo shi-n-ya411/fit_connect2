@@ -5,7 +5,6 @@ class PostsController < ApplicationController
 
   # 投稿一覧
   def index
-    # @posts = Post.all
     @posts = Post.order(created_at: :desc)
   end
 
