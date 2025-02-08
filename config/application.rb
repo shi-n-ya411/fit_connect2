@@ -10,6 +10,10 @@ module FitConnect2
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
+    # デフォルトの言語を日本語に設定
+    config.i18n.default_locale = :ja
+    # タイムゾーンを日本（東京）に設定
+    config.time_zone = "Asia/Tokyo"
 
     # Configuration for the application, engines, and railties goes here.
     #

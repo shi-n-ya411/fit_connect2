@@ -1,0 +1,25 @@
+ja:
+  devise:
+    confirmations:
+      confirmed: "メールアドレスが正常に確認されました。"
+      send_instructions: "メールアドレスの確認方法を記載したメールを数分以内に送信します。"
+      send_paranoid_instructions: "メールアドレスがデータベースに存在する場合、確認方法を記載したメールを送信します。"
+    failure:
+      already_authenticated: "すでにログインしています。"
+      inactive: "アカウントがまだ有効化されていません。"
+      invalid: "メールアドレスまたはパスワードが無効です。"
+      locked: "アカウントがロックされています。"
+      last_attempt: "アカウントがロックされる前にあと1回試行できます。"
+      not_found_in_database: "メールアドレスまたはパスワードが無効です。"
+      timeout: "セッションの有効期限が切れました。再度ログインしてください。"
+      unauthenticated: "ログインまたはサインアップが必要です。"
+      unconfirmed: "メールアドレスの確認が必要です。"
+    sessions:
+      signed_in: "ログインしました。"
+      signed_out: "ログアウトしました。"
+      already_signed_out: "すでにログアウトしています。"
+    registrations:
+      signed_up: "アカウント登録が完了しました。"
+      signed_up_but_unconfirmed: "確認メールを送信しました。メール内のリンクをクリックしてアカウントを有効化してください。"
+      updated: "アカウント情報を更新しました。"
+      destroyed: "アカウントを削除しました。"
