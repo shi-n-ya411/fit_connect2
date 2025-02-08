@@ -3,18 +3,6 @@
     <div class="col-md-6">
       <div class="card mb-4 shadow-sm">
         <div class="card-body">
-          <!-- エラーメッセージ -->
-          <% if resource.errors.any? %>
-            <div class="alert alert-danger">
-              <h5><%= pluralize(resource.errors.count, "error") %> が発生しました:</h5>
-              <ul class="mb-0">
-                <% resource.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-
           <div class="text-center mb-4">
             <h1 class="card-title">ログイン</h1>
           </div>
