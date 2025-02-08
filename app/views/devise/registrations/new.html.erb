@@ -6,7 +6,7 @@
           <!-- エラーメッセージ -->
           <% if resource.errors.any? %>
             <div class="alert alert-danger">
-              <h5><%= pluralize(resource.errors.count, "error") %> が発生しました:</h5>
+            <h5><%= pluralize(resource.errors.count, "件のエラー") %>が発生しました:</h5>
               <ul class="mb-0">
                 <% resource.errors.full_messages.each do |message| %>
                   <li><%= message %></li>
