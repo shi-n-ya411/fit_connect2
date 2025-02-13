@@ -1,9 +1,9 @@
 <div class="mypage-container">
   <h1 class="text-center my-4"><%= @user.name %> さんのマイページ</h1>
-    <div class="container">
-      <div class="row">
-<!--           左カラム           -->
-        <div class="col-md-3">
+  <div class="container">
+    <div class="row">
+      <!-- 左カラム -->
+      <div class="col-md-3">
         <div class="card mb-4 shadow-sm">
           <div class="card-body text-center">
             <% if @user.profile_image.attached? %>
@@ -11,8 +11,7 @@
             <% else %>
               <%= image_tag "no_image.jpg", class: "rounded-circle border mb-3", alt: "No Profile Image" %>
             <% end %>
-            <h5 class="card-title"><%= @user.name %>
-            </h5>
+            <h5 class="card-title"><%= @user.name %></h5>
             <p class="card-text text-muted mt-2">
               自己紹介: <%= @user.introduction.presence || "自己紹介が登録されていません。" %>
             </p>
@@ -23,32 +22,9 @@
         </div>
       </div>
 
-      <!--             右カラム            -->
+      <!-- 右カラム -->
       <div class="col-md-9">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h1>タイムライン</h1>
-            <div class="mb-3">
-              <%= link_to '新規投稿', new_post_path, class: 'btn btn-primary btn-sm' %>
-            </div>
-            <ul class="list-unstyled">
-              <% @posts.each do |post| %>
-                <li class="post-item mb-4 p-3 border rounded">
-                  <h4 class="post-title">
-                    <%= link_to post.title, post_path(post), class: "text-decoration-none text-dark" %>
-                  </h4>
-                  <p class="post-content">
-                    <%= truncate(post.content, length: 100) %>
-                  </p>
-                  <p class="post-meta text-muted">
-                    投稿者: <%= link_to post.user.name, user_path(post.user), class: "text-decoration-none text-primary" %>
-                    ・<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
-                  </p>
-                </li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
+        <%= render 'shared/post_list' %>
       </div>
     </div>
   </div>
