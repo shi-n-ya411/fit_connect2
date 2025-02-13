@@ -7,7 +7,7 @@
         <div class="card mb-4 shadow-sm">
           <div class="card-body text-center">
             <% if @user.profile_image.attached? %>
-              <%= image_tag @user.profile_image.variant(resize_to_fill: [150, 150]), class: "rounded-circle border" %>
+              <%= image_tag @user.profile_image.variant(resize: "150x150").processed, class: "rounded-circle border mb-3" %>
             <% else %>
               <%= image_tag "no_image.jpg", class: "rounded-circle border mb-3", alt: "No Profile Image" %>
             <% end %>
@@ -15,8 +15,8 @@
             <p class="card-text text-muted mt-2">
               自己紹介: <%= @user.introduction.presence || "自己紹介が登録されていません。" %>
             </p>
-            <p>フォロー中: <%= link_to "#{@user.following_count}", following_user_path(@user), class: 'text-decoration-none' %></p>
-            <p>フォロワー: <%= link_to "#{@user.followers_count}", followers_user_path(@user), class: 'text-decoration-none' %></p>
+            <p>フォロー中: <%= link_to "#{@user.following.size}", following_user_path(@user), class: 'text-decoration-none' %></p>
+            <p>フォロワー: <%= link_to "#{@user.followers.size}", followers_user_path(@user), class: 'text-decoration-none' %></p>
             <%= link_to 'プロフィールを編集', edit_user_registration_path, class: 'btn btn-primary btn-sm mt-3' %>
           </div>
         </div>
