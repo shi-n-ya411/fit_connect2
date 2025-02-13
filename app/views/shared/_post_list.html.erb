@@ -4,7 +4,7 @@
       <%= link_to '新規投稿', new_post_path, class: 'btn btn-primary btn-sm' %>
     </div>
     <ul class="list-unstyled">
-      <% @posts.each do |post| %>
+      <% posts.each do |post| %>
         <li class="post-item mb-4 p-3 border rounded">
           <h4 class="post-title">
             <%= link_to post.title, post_path(post), class: "text-decoration-none text-dark" %>
