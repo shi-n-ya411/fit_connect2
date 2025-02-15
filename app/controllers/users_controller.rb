@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # ユーザー情報を事前に取得
   before_action :set_user, only: [:show, :edit, :update]
   # ゲストログイン時に編集画面にアクセス制限
-  before_action :ensure_guest_user, only: [:edit]
+  before_action :ensure_guest_user, only: [:edit, :update]
 
    # マイページ
   def mypage
@@ -65,9 +65,8 @@ class UsersController < ApplicationController
 
   # ゲストログイン時に編集画面にアクセス制限
   def ensure_guest_user
-    @user = User.find(params[:id])
-    if @user.guest_user?
-      redirect_to user_path(current_user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
+    if current_user.guest_user?
+      redirect_to mypage_user_path(current_user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
     end
   end  
 

@@ -17,7 +17,7 @@
             </p>
             <p>フォロー中: <%= link_to "#{@user.following.size}", following_user_path(@user), class: 'text-decoration-none' %></p>
             <p>フォロワー: <%= link_to "#{@user.followers.size}", followers_user_path(@user), class: 'text-decoration-none' %></p>
-            <% unless current_user&.guest? %>
+            <% unless @user.guest_user? %>
               <%= link_to 'プロフィールを編集', edit_user_registration_path, class: 'btn btn-primary btn-sm mt-3' %>
             <% end %>
           </div>
