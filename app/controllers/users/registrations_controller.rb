@@ -3,7 +3,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_account_update_params, only: [:update]
   # before_action :configure_sign_up_params, only: [:create]
-
+  before_action :ensure_guest_user, only: [:edit, :update]
 
   # GET /resource/sign_up
   # def new
@@ -59,6 +59,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     mypage_users_path
   end
 
+  def ensure_guest_user
+    if current_user.guest_user?
+      redirect_to mypage_users_path, notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
+    end
+  end
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
