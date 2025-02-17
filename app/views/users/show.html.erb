@@ -12,20 +12,30 @@
               <%= image_tag "no_image.jpg", class: "rounded-circle border mb-3", alt: "No Profile Image" %>
             <% end %>
             <h5 class="card-title"><%= @user.name %></h5>
-            <% if current_user != @user %> <!-- 自分自身をフォローできないようにする -->
-              <% if current_user && relationship = current_user.active_relationships.find_by(followed_id: @user.id) %>
-                <%= button_to 'フォロー解除', relationship_path(relationship), method: :delete, class: 'btn btn-danger btn-sm mt-3' %>
+
+            <!-- フォロー機能 -->
+            <% if current_user != @user %>
+              <% relationship = current_user.active_relationships.find_by(followed_id: @user.id) %>
+              <% if relationship %>
+                <%= button_to relationship_path(relationship), method: :delete, class: 'btn btn-danger btn-sm mt-3' do %>
+                  <i class="fa-solid fa-user-xmark"></i> フォロー解除
+                <% end %>
               <% else %>
-                <%= button_to 'フォローする', relationships_path(followed_id: @user.id), method: :post, class: 'btn btn-primary btn-sm mt-3' %>
+                <%= button_to relationships_path(followed_id: @user.id), method: :post, class: 'btn btn-primary btn-sm mt-3' do %>
+                  <i class="fa-solid fa-user-plus"></i> フォローする
+                <% end %>
               <% end %>
             <% end %>
             <p>フォロー中: <%= link_to "#{@user.following.size}", following_user_path(@user), class: 'text-decoration-none' %></p>
             <p>フォロワー: <%= link_to "#{@user.followers.size}", followers_user_path(@user), class: 'text-decoration-none' %></p>
             <p class="mt-3">自己紹介: <%= @user.introduction.presence || "自己紹介が登録されていません。" %></p>
             <% if current_user == @user %>
-              <% unless @user.guest_user? %>
-                <%= link_to 'プロフィールを編集', edit_user_registration_path, class: 'btn btn-primary btn-sm mt-3' %>
-                <%= button_to 'アカウントを削除', user_path(@user), method: :delete, data: { confirm: '本当にアカウントを削除しますか？' }, class: 'btn btn-danger btn-sm mt-3' %>
+             <% unless @user.guest_user? %>
+              <%= link_to edit_user_registration_path, class: 'btn btn-primary btn-sm mt-3' do %>
+                <i class="fa-solid fa-pen-to-square"></i> プロフィールを編集
+              <% end %>
+              <%= button_to user_path(@user), method: :delete, data: { confirm: '本当にアカウントを削除しますか？' }, class: 'btn btn-danger btn-sm mt-3' do %>
+                <i class="fa-solid fa-user-xmark"></i> アカウントを削除
               <% end %>
             <% end %>
           </div>
