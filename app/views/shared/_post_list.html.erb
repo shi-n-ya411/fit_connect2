@@ -1,7 +1,9 @@
 <div class="card shadow-sm">
   <div class="card-body">
     <div class="mb-3">
-      <%= link_to '新規投稿', new_post_path, class: 'btn btn-primary btn-sm' %>
+      <%= link_to new_post_path, class: 'btn btn-primary btn-sm' do %>
+        <i class="fa-solid fa-pen-to-square"></i> 新規投稿
+      <% end %>
     </div>
     <ul class="list-unstyled">
       <% posts.each do |post| %>

@@ -11,9 +11,16 @@ class RelationshipsController < ApplicationController
 
   #フォロー解除
   def destroy
-    user = User.find(params[:id])
-    current_user.following.delete(user)
-    flash[:notice] = "#{user.name}さんのフォローを解除しました。"
-    redirect_to user_path(user)
+    @relationship = Relationship.find_by(id: params[:id])
+    
+    if @relationship.nil?
+      flash[:alert] = "フォロー関係が見つかりません"
+      redirect_to root_path and return
+    end
+    
+    @relationship.destroy
+    flash[:notice] = "フォローを解除しました"
+    redirect_to @relationship.followed
   end
+  
 end

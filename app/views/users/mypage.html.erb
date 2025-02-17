@@ -17,7 +17,9 @@
             </p>
             <p>フォロー中: <%= link_to "#{@user.following.size}", following_user_path(@user), class: 'text-decoration-none' %></p>
             <p>フォロワー: <%= link_to "#{@user.followers.size}", followers_user_path(@user), class: 'text-decoration-none' %></p>
-            <%= link_to 'プロフィールを編集', edit_user_registration_path, class: 'btn btn-primary btn-sm mt-3' %>
+            <%= link_to edit_user_registration_path, class: 'btn btn-primary btn-sm mt-3' do %>
+              <i class="fa-solid fa-pen-to-square"></i> プロフィールを編集
+            <% end %>
           </div>
         </div>
       </div>

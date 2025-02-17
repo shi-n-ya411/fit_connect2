@@ -62,27 +62,42 @@
             <div class="mb-2">
               <%= form.text_area :content, placeholder: "コメントを入力してください", class: "form-control" %>
             </div>
-            <%= form.submit raw('<i class="fa-regular fa-comment"></i> 投稿'), class: "btn btn-success" %>
+            <%= form.button type: "submit", class: "btn btn-success" do %>
+              <i class="fa-regular fa-comment"></i> 投稿
+            <% end %>
           <% end %>
 
           <!-- フォロー機能 -->
           <div class="follow-section mt-4">
-            <% if @post.user != current_user %> <!-- 自分自身はフォロー不可 -->
-              <% if current_user.following?(@post.user) %>
-                <%= button_to '❌ フォロー解除', relationship_path(@post.user), method: :delete, class: 'btn btn-danger' %>
-              <% else %>
-                <%= button_to '➕ フォローする', relationships_path(followed_id: @post.user.id), method: :post, class: 'btn btn-primary' %>
-              <% end %>
+          <% if @post.user != current_user %>
+          <% relationship = current_user.active_relationships.find_by(followed_id: @post.user.id) %>
+          <% if relationship %>
+            <%= button_to relationship_path(relationship), method: :delete, class: 'btn btn-danger' do %>
+              <i class="fa-solid fa-user-xmark"></i> フォロー解除
             <% end %>
+          <% else %>
+            <%= button_to relationships_path(followed_id: @post.user.id), method: :post, class: 'btn btn-primary' do %>
+              <i class="fa-solid fa-user-plus"></i> フォローする
+            <% end %>
+          <% end %>
+        <% end %>
+        
           </div>
 
           <!-- アクションボタン -->
           <div class="post-actions mt-4 d-flex gap-2">
-            <%= link_to '✏️ 編集', edit_post_path(@post), class: 'btn btn-warning' %>
-            <%= link_to '🗑️ 削除', post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
-            <%= link_to '⬅️ 戻る', mypage_users_path, class: 'btn btn-secondary' %>
+            <% if @post.user == current_user %>
+              <%= link_to edit_post_path(@post), class: 'btn btn-warning' do %>
+                <i class="fa-solid fa-pen-to-square"></i> 編集
+              <% end %>
+              <%= link_to post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' do %>
+                <i class="fa-solid fa-trash"></i> 削除
+              <% end %>
+            <% end %>
+            <%= link_to mypage_users_path, class: 'btn btn-secondary' do %>
+              <i class="fa-solid fa-arrow-left"></i> 戻る
+            <% end %>
           </div>
-
         </div>
       </div>
     </div>
